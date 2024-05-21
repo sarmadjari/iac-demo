@@ -1,0 +1,36 @@
+name: Deploy Bicep Templates
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Install Bicep CLI
+        run: |
+          az bicep install
+
+      - name: Deploy Bicep templates
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          VM_ADMIN_PASSWORD: ${{ secrets.VM_ADMIN_PASSWORD }}
+        run: |
+          az login --tenant $AZURE_TENANT_ID
+          az account set --subscription $AZURE_SUBSCRIPTION_ID
+          az deployment sub create \
+            --location eastus \
+            --template-file main.bicep \
+            --parameters vmAdminPassword=${{ secrets.VM_ADMIN_PASSWORD }}
