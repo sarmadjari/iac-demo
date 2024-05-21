@@ -19,10 +19,5 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy Bicep Template
-        uses: azure/arm-deploy@v1
-        with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          location: eastus
-          template: ./main.bicep
-          parameters: 'vmAdminPassword=${{ secrets.VM_ADMIN_PASSWORD }}'
-          failOnStdErr: false
+        run: |
+          az deployment sub create --location westus --template-file ./main.bicep
