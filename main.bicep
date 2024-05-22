@@ -3,7 +3,7 @@ targetScope = 'subscription'
 
 // General parameters
 param location string = deployment().location
-param resourceGroupName string = 'myTestRG'
+param resourceGroupName string = 'myTestRG-US'
 
 // VNet parameters
 param vnetName string = 'myVnet'
