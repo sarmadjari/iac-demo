@@ -22,4 +22,4 @@ jobs:
         env:
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: |
-          az deployment sub create --location eastus --template-file ./main.bicep --parameters vmAdminPassword=Password123!
+          az deployment sub create --location eastus --template-file ./main.bicep --parameters vmAdminPassword=${{ secrets.VM_ADMIN_PASSWORD }}
